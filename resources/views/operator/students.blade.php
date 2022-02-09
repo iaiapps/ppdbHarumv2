@@ -12,6 +12,7 @@
             <tr>
                 <th>#</th>
                 <th>Nama Lengkap</th>
+                <th>Token</th>
                 <th>Asal sekolah</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $students->firstItem() + $key }}</td>
                     <td>{{ $student->full_name }}</td>
+                    <td>{{ $student->token }}</td>
                     <td>{{ $student->school_origin }}</td>
                     <td>
                         @php
@@ -37,12 +39,13 @@
                     </td>
                     <td>
                         <form action="{{ route('students.destroy', $student->id) }}" method="POST">
-
+                            <a class="btn btn-success btn-sm" href="{{ route('kirim.wa', $student->id) }}">
+                                Tes WA
+                            </a>
                             <a class="btn btn-primary btn-sm" href="{{ route('students.show', $student->id) }}">
                                 <i class="bi bi-search" aria-hidden="true">
                                 </i>
                             </a>
-
                             <a class="btn btn-sm btn-primary" href="{{ route('students.edit', $student->id) }}">
                                 <i class="bi bi-pencil-square" aria-hidden="true">
                                 </i></a>

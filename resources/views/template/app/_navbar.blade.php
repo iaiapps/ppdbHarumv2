@@ -6,5 +6,4 @@
         </a>
     </div>
 </nav>
-
-<x-Menu />
+<x-menu_admin />

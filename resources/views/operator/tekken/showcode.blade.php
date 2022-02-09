@@ -29,6 +29,8 @@
                         $status = 'Belum terpakai';
                     } elseif ($item->level == 'registered') {
                         $status = 'Telah mendaftar';
+                    } elseif ($item->level == 'accept') {
+                        $status = 'Diterima';
                     } else {
                         $status = 'Ditolak';
                     }
@@ -53,9 +55,8 @@
             @endforeach
         </tbody>
     </table>
-    {{ $token_table->links('vendor.pagination.custom') }}
 @endsection
-@push('scripts')
+@push('script-head')
     <script>
         // paste code
         function myFunction() {
@@ -63,7 +64,7 @@
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             document.execCommand("copy");
-            alert("Kode siap digunakan, PASTE LAH: " + copyText.value);
+            // alert("Kode siap digunakan, PASTE LAH: " + copyText.value);
         }
     </script>
 @endpush

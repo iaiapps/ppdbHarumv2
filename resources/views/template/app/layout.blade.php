@@ -1,9 +1,14 @@
 @include('template.app._head')
 
 <body>
-    <x-Alert type="success" />
+
+    @if ($message = Session::get('success'))
+        <x-Alert halo="OK" pesan="{{ $message }}" />
+    @endif
     @include('template.app._navbar')
+
     <section class="negative ">
+
         <div class="container mb-4 ">
             <div class="card">
                 <div class="card-body">

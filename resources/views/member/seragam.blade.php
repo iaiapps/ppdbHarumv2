@@ -1,6 +1,6 @@
 @extends('template.app.layoutMember')
-@section('content')
 
+@section('content')
     <div class="accordion border" id="ukuran">
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">

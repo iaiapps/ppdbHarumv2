@@ -13,9 +13,9 @@ class TekkenController extends Controller
     public function showCode()
     {
         $rnd = Str::random(8);
-        return view('op.tekken.showcode',[
+        return view('operator.tekken.showcode',[
             'kode_tekken'=>Str::upper($rnd),
-            'token_table'=>DB::table('members')->orderBy('id','desc')->paginate(7)
+            'token_table'=>DB::table('members')->orderBy('id','desc')->paginate(1000)
         ]);
     }
     public function useCode(Request $request)
@@ -28,7 +28,6 @@ class TekkenController extends Controller
             'password'=>bcrypt("password"),
             'remember_token'=>Str::random(60)
         ]);
-        alert()->success('Berhasil','Kode siap digunakan');
-        return back();
+        return redirect()->back()->with(['success' => 'Kode SIAP di PASTE']);
     }
 }

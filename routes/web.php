@@ -14,16 +14,15 @@ use App\Models\setup;
 use Matrix\Operators\Operator;
 
 Route::get('/', function () {
-    $pesan_welcome = setup::where('name', 'pesan_welcome')->first()->value;
-    $judul_welcome = setup::where('name', 'judul_welcome')->first()->value;
-    return view('landingpage.welcome', compact('pesan_welcome', 'judul_welcome'));
+    // $pesan_welcome = setup::where('name', 'pesan_welcome')->first()->value;
+    // $judul_welcome = setup::where('name', 'judul_welcome')->first()->value;
+    return view('landingpage.welcome');
 })->name('landingpage.home');
-
 
 Route::group(['prefix' => 'wel'], function () {
     Route::get('jadwal', function () {
-        $pengumuman = setup::where('name', 'pengumuman_welcome')->first()->value;
-        return view('landingpage.jadwal', compact('pengumuman'));
+        // $pengumuman = setup::where('name', 'pengumuman_welcome')->first()->value;
+        return view('landingpage.jadwal');
     })->name('landingpage.jadwal');
     Route::get('panduan', function () {
         return view('landingpage.panduan');
@@ -48,20 +47,24 @@ Route::get('coba', function () {
 // Bagian Member belum isi data
 Route::group(['middleware' => ['auth:member', 'ceklevel:member']], function () {
     Route::get('form', [BerandaController::class, 'index'])->name('form_pendaftaran');
-    Route::post('form', [BerandaController::class, 'postForm'])->name('postForm');
+    Route::post('form', [BerandaController::class, 'memberPost'])->name('member.input');
 });
 
 //bagian member sudah isi data
-Route::group(['middleware' => ['auth:member', 'ceklevel:registered']], function () {
+Route::group(['middleware' => ['auth:member', 'ceklevel:registered,accept']], function () {
     Route::group(['prefix' => 'members'], function () {
         Route::get('index', [MemberController::class, 'index'])->name('member.index');
-        
         Route::get('schedule', [MemberController::class, 'schedule']);
+    });
+    Route::get('accRedirect', [MemberController::class, 'accRedirect']);
+});
+//bagian member diterima
+Route::group(['middleware' => ['auth:member', 'ceklevel:registered,accept']], function () {
+    Route::group(['prefix' => 'members'], function () {
         Route::get('informasi_biaya',[Membercontroller::class,'informasiBiaya'])->name('member.info_biaya');
     });
     Route::get('accRedirect', [MemberController::class, 'accRedirect']);
 });
-
 // Member diterima
 Route::group(['middleware' => ['auth:member', 'ceklevel:accept']], function () {
     Route::group(['prefix' => 'members'], function () {
@@ -147,3 +150,4 @@ Route::get('member/export', [MemberController::class, 'exportExcel'])->name('exp
 //TRY YAJRA
 Route::get('user', [UserController::class, 'index']);
 Route::get('user/json', [UserController::class, 'json']);
+Route::get('kirimwa/{id}',[OperatorController::class,'kirimWa'])->name('kirim.wa');
