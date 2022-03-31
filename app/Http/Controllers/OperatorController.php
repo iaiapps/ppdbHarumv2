@@ -133,7 +133,7 @@ class OperatorController extends Controller
     public function applyDaftarUlang()
     {
         $funds = Fund_category::orderBy('id','asc')->get();
-        $students = Student::where('status',2)->orderBy('status','asc')->paginate(15);
+        $students = Student::where('status',2)->get();
         return view('operator.fund.apply',compact('students','funds'));
     }
     public function postApplyDaftarulang(Request $request,$id)
@@ -168,6 +168,13 @@ class OperatorController extends Controller
     }
     public function gantiTerima($id)
     {
+        // //cek kode token student
+        $token = Student::where('id',$id)->first()->token;
+        // // update di members table level ke accept
+        Member::where('email', $token)->update(['level'=>'accept']);
+        // // update status menjadi 2/diterima
+        // Student::whereIn('id',$token)->update(['status'=>2]);
+        // return redirect()->back()->with(['success' => 'Berhasil diterima']);
         Student::find($id)->update(['status'=>2]);
         alert()->success('Data diganti terima','Berhasil');
         return back();
